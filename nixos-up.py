@@ -295,13 +295,13 @@ config = re.sub(r"\}\s*$", "\n".join([
 
 # Create and Use Swap File
 # sudo fallocate -l 1G /swapfile
-run(["fallocate", "-l", f"{hibernation_swap_mb}M", "/swapfile"])
+run(["fallocate", "-l", f"{hibernation_swap_mb}M", "/mnt/swapfile"])
 # sudo chmod 600 /swapfile
-run(["chmod", "600", "/swapfile"])
+run(["chmod", "600", "/mnt/swapfile"])
 # sudo mkswap /swapfile
-run(["mkswap", "/swapfile"])
+run(["mkswap", "/mnt/swapfile"])
 # sudo swapon /swapfile
-run(["swapon", "/swapfile"])
+run(["swapon", "/mnt/swapfile"])
 
 # Timezone
 timezone = requests.get("http://ipinfo.io").json()["timezone"]
