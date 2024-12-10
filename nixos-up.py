@@ -288,10 +288,20 @@ config = re.sub(r"\}\s*$", "\n".join([
   f"  # max(1GB, sqrt(RAM)) = {swap_mb}. If you want to use hibernation with",
   f"  # this device, then it's recommended that you use",
   f"  # RAM + max(1GB, sqrt(RAM)) = {hibernation_swap_mb:.3f}.",
-  f"  swapDevices = [ {{ device = \"/swapfile\"; size = {swap_mb}; }} ];",
+  f"  swapDevices = [ {{ device = \"/swapfile\"; size = {hibernation_swap_mb}; }} ];",
   "}",
   ""
 ]), config)
+
+# Create and Use Swap File
+# sudo fallocate -l 1G /swapfile
+run(["fallocate", "-l", f"{hibernation_swap_mb}M", "/swapfile"])
+# sudo chmod 600 /swapfile
+run(["chmod", "600", "/swapfile"])
+# sudo mkswap /swapfile
+run(["mkswap", "/swapfile"])
+# sudo swapon /swapfile
+run(["swapon", "/swapfile"])
 
 # Timezone
 timezone = requests.get("http://ipinfo.io").json()["timezone"]
