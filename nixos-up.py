@@ -248,7 +248,7 @@ config = re.sub(r" *# Define a user account\..*\n( *# .*\n)+", "\n".join([
 ]), config)
 
 # Enable NetworkManager and Disable Gnome
-config = config.replace("# networking.networkmanager.enable = true;", "networking.networkmanager.enable = true;)
+config = config.replace("# networking.networkmanager.enable = true;", "networking.networkmanager.enable = true;")
 # config = config.replace("# services.printing.enable = true;", "services.printing.enable = true;")
 # config = config.replace("# sound.enable = true;", "sound.enable = true;")
 # config = config.replace("# hardware.pulseaudio.enable = true;", "hardware.pulseaudio.enable = true;")
