@@ -1,4 +1,4 @@
-# nixos-up
+# nixbook-up
 
 nixos-up is a dead-simple install wizard for NixOS. It's the fastest way to get from ISO to working installation.
 
