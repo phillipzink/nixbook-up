@@ -59,21 +59,6 @@ def ask_disk() -> int:
 selected_disk = ask_disk()
 print()
 
-def ask_graphical() -> bool:
-  sel = input("""Will this be a desktop/graphical install? Ie, do you have a
-    monitor (y) or is this a server (n)? [Yn] """).lower()
-
-  if sel == "" or sel == "y":
-    return True
-  elif sel == "n":
-    return False
-  else:
-    print("Input must be 'y' (yes) or 'n' (no).\n")
-    return ask_graphical()
-
-graphical = ask_graphical()
-print()
-
 def ask_username() -> str:
   sel = input("What would you like your username to be? ")
   if re.fullmatch(r"^[a-z_][a-z0-9_-]*[\$]?$", sel):
@@ -262,14 +247,17 @@ config = re.sub(r" *# Define a user account\..*\n( *# .*\n)+", "\n".join([
   ""
 ]), config)
 
-# Graphical environment
-if graphical:
-  config = config.replace("# services.printing.enable = true;", "services.printing.enable = true;")
-  config = config.replace("# sound.enable = true;", "sound.enable = true;")
-  config = config.replace("# hardware.pulseaudio.enable = true;", "hardware.pulseaudio.enable = true;")
-  config = config.replace("# services.xserver.libinput.enable = true;", "services.xserver.libinput.enable = true;")
-  # See https://nixos.wiki/wiki/GNOME.
-  config = config.replace("# services.xserver.enable = true;", "services.xserver.enable = true;\n  services.xserver.desktopManager.gnome.enable = true;")
+# Enable NetworkManager and Disable Gnome
+config = config.replace("# networking.networkmanager.enable = true;", "networking.networkmanager.enable = true;)
+# config = config.replace("# services.printing.enable = true;", "services.printing.enable = true;")
+# config = config.replace("# sound.enable = true;", "sound.enable = true;")
+# config = config.replace("# hardware.pulseaudio.enable = true;", "hardware.pulseaudio.enable = true;")
+# config = config.replace("# services.xserver.libinput.enable = true;", "services.xserver.libinput.enable = true;")
+# See https://nixos.wiki/wiki/GNOME.
+config = config.replace("services.xserver.enable = true;", "# services.xserver.enable = true;")
+config = config.replace("services.xserver.displayManager.gdm.enable = true;", "# services.xserver.displayManager.gdm.enable = true;")
+config = config.replace("services.xserver.desktopManager.gnome.enable = true;", "# services.xserver.desktopManager.gnome.enable = true;")
+  
 
 ram_bytes = psutil.virtual_memory().total
 print(f"Detected {(ram_bytes / 1024 / 1024 / 1024):.3f} Gb of RAM...")
