@@ -221,7 +221,7 @@ config = re.sub(r"imports =\s*\[", """imports = [ "${home-manager}/nixos" \n""",
 
 # Non-EFI systems require boot.loader.grub.device to be specified.
 if not efi:
-  config = config.replace("boot.loader.grub.version = 2;", f"boot.loader.grub.version = 2;\n  boot.loader.grub.device = \"/dev/{selected_disk_name}\";\n")
+  config = config.replace("# boot.loader.grub.device = \"/dev/sda\"; # or \"nodev\" for efi only", f"boot.loader.grub.device = \"/dev/{selected_disk_name}\";\n")
 
 # Declarative user management
 # Using `hashedPasswordFile` is a little bit more secure than `hashedPassword` since
